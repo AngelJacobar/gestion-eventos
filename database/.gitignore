@@ -1,0 +1,10 @@
+*.sqlite*
+./flyway/assets
+./flyway/conf
+./flyway/drivers
+./flyway/jre
+./flyway/lib
+./flyway/licenses
+./flyway/flyway
+./flyway/flyway.cmd
+./flyway/README.txt

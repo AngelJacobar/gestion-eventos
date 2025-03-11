@@ -1,0 +1,82 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+/* Estilos de Tippy */
+@import 'tippy.js/dist/tippy.css';
+@import 'tippy.js/themes/light-border.css';
+@import 'tippy.js/themes/light.css';
+@import 'tippy.js/animations/scale.css';
+
+/* fuente local */
+@font-face {
+    font-family: 'Figtree';
+    font-style: normal;
+    font-weight: 400;
+    font-stretch: 100%;
+    src: url("../fonts/figtree/figtree-latin-400-normal.woff2") format('woff2');
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face {
+    font-family: 'Figtree';
+    font-style: normal;
+    font-weight: 500;
+    font-stretch: 100%;
+    src: url("../fonts/figtree/figtree-latin-500-normal.woff2") format('woff2');
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+  @font-face {
+    font-family: 'Figtree';
+    font-style: normal;
+    font-weight: 600;
+    font-stretch: 100%;
+    src: url("../fonts/figtree/figtree-latin-600-normal.woff2") format('woff2');
+    unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+  }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    h1{ @apply text-2xl sm:text-3xl lg:text-4xl font-semibold text-secundario-600 text-center }
+    h2{ @apply text-xl sm:text-2xl lg:text-3xl text-secundario-600 }
+    h2{ @apply text-lg sm:text-xl lg:text-2xl text-primario-800 }
+    a{ @apply underline text-sky-600 hover:text-sky-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primario-500 }
+    p:not(footer, header){ @apply text-gray-700 }
+
+    main{ @apply w-full}
+
+    table thead tr th{ @apply bg-primario-700 text-white font-semibold text-sm p-2  }
+    table tbody tr td{ @apply text-gray-600 px-2 text-sm }
+    table tbody tr:nth-child(even) td{ @apply bg-primario-50 bg-opacity-50 }
+
+    .marco{ @apply  mt-6 px-8 py-6 bg-primario-50 border shadow overflow-hidden rounded-md }
+
+    .marco-in{ @apply bg-white border border-primario-200 }
+
+    [type='text'], input:where(:not([type])), [type='email'], [type='url'], [type='password'], [type='number'], [type='date'], [type='datetime-local'], [type='month'], [type='search'], [type='tel'], [type='time'], [type='week'], [multiple], textarea, select
+    {
+        @apply border border-primario-200 rounded-md shadow-sm
+    }
+
+}
+
+@layer components{
+    .btn, a.btn { @apply inline-flex justify-center items-center px-4 py-2 rounded font-semibold text-xs text-center text-white uppercase no-underline tracking-widest focus:outline-none focus:ring-2 focus:ring-indigo-400  transition ease-in-out duration-150 disabled:cursor-not-allowed}
+    .btn_primario { @apply bg-primario-700 hover:bg-primario-600 focus:bg-primario-700 active:bg-primario-900 disabled:bg-primario-300 }
+    .btn_secundario { @apply bg-secundario-600 hover:bg-secundario-500 focus:bg-secundario-700 active:bg-secundario-900 disabled:bg-secundario-300}
+    .btn_emerald { @apply bg-emerald-600 hover:bg-emerald-500 focus:bg-emerald-700 active:bg-emerald-900 disabled:bg-emerald-300 }
+    .btn_cancel { @apply bg-rose-600 hover:bg-rose-500 focus:bg-rose-700 active:bg-rose-900 disabled:bg-rose-300 }
+
+    .ico-table{ @apply inline-flex items-center justify-center bg-gray-600 w-7 h-7 text-white text-xs rounded-full p-1 m-1  }
+}
+
+@layer utilities{
+    .leyenda{ @apply text-center text-sm text-gray-400 font-semibold}
+    .error{ @apply text-xs text-rose-700}
+    .alerta{ @apply text-secundario-900 bg-secundario-100 border-l-8 border-secundario-500 p-3 my-2 mx-auto}
+    .obligatorio { @apply text-rose-600 mr-1;}
+}
+
+.tippy-box{ background: transparent;  }
+.tippy-content{ background: #d6e0e2; color: black; border: 1px solid #9ba9ac; font-size: 12px; font-weight: 400; letter-spacing: .03rem; border-radius: 3px; box-shadow: 1px 1px 2px #9797a4;  }
+.tippy-arrow{ color: #9ba9ac;  }

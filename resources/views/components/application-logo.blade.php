@@ -1,0 +1,1 @@
+<img src="{{URL::asset('img/UNAMhead.webp')}}" class="h-10">

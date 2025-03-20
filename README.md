@@ -1,4 +1,4 @@
-# Proyecto Base Laravel 11
+# Proyecto Base Laravel 12
 
 _________________
 

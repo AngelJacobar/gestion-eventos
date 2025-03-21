@@ -94,16 +94,16 @@ _________________
 
 ## Instalación {#instalacion}
 
-**Clonación del repositorio en el directorio `proyecto-base-laravel-11/`**
+**Clonación del repositorio en el directorio `proyecto-base-laravel-12/`**
 
 ```shell
-git clone https://kwira-kaab.unam.mx/DGTIC/DCV/SSI/proyectos-base/proyecto-base-laravel-11.git
+git clone https://kwira-kaab.unam.mx/DGTIC/DCV/SSI/proyectos-base/proyecto-base-laravel-12.git
 ```
 
 **Moverse a la carpeta del proyecto**
 
 ```shell
-cd proyecto-base-laravel-11
+cd proyecto-base-laravel-12
 ```
 
 **Moverse a la rama develop**
@@ -119,7 +119,7 @@ docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
-    laravelsail/php83-composer:latest \
+    laravelsail/php84-composer:latest \
     composer install --ignore-platform-reqs
 ```
 
@@ -133,9 +133,9 @@ cp .env.example .env
 
 ```shell
 cd ..
-chmod -R gu+w proyecto-base-laravel-11
-chmod -R guo+w proyecto-base-laravel-11
-cd proyecto-base-laravel-11
+chmod -R gu+w proyecto-base-laravel-12
+chmod -R guo+w proyecto-base-laravel-12
+cd proyecto-base-laravel-12
 ```
 
 **Ejecutar el comando para crear y levantar los servicios**

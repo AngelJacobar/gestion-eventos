@@ -27,3 +27,9 @@ Route::get('/creditos', function () {
 })->name('creditos');
 
 require __DIR__.'/auth.php';
+
+
+//Para manejar errores 404
+Route::fallback(function () {
+    return redirect()->route('dashboard')->error('messages.pagina_no_existe');
+});

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
 class IDULogin extends Controller
@@ -22,8 +24,8 @@ class IDULogin extends Controller
     public function login(Request $request)
     {
         $usuarioIDU = Socialite::driver('idu')->redirectUrl(config('services.idu.redirect'))->user();
-
-        $usuario = Usuario::where('email', $usuarioIDU->user['unamEmail'])->first();
+        $curp = Str::upper($usuarioIDU->user['curp']);
+        $usuario = Usuario::where('curp', $curp)->first();
 
         if (config('services.idu.register') && ! $usuario) {
             $usuario = Usuario::create([
@@ -32,7 +34,7 @@ class IDULogin extends Controller
                 'segundo_apellido' => $usuarioIDU->user['secondLastName'],
                 'activo' => EstatusEnum::Activo,
                 'email' => $usuarioIDU->user['unamEmail'],
-                'curp' => $usuarioIDU->user['curp'],
+                'curp' => $curp,
                 'numero_cuenta' => $usuarioIDU->user['studentNumber'] ?? null,
                 'numero_trabajador' => $usuarioIDU->user['employeeNumber'] ?? null,
                 'password' => '',
@@ -52,6 +54,15 @@ class IDULogin extends Controller
         }
 
         Auth::login($usuario);
+        Session::put('IDUToken', $usuarioIDU->token);
+        Session::put('IDUrefreshToken', $usuarioIDU->refreshToken);
         return redirect()->route('dashboard');
+    }
+
+    public static function logout()
+    {
+        $logoutUrl = Socialite::driver('idu')->getLogoutUrl();
+        // Redirect the user to the Keycloak logout URL
+        return redirect($logoutUrl);
     }
 }

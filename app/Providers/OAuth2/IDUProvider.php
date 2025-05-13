@@ -5,6 +5,7 @@ namespace App\Providers\OAuth2;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\InvalidStateException;
@@ -14,13 +15,12 @@ use Laravel\Socialite\Two\User;
 class IDUProvider extends AbstractProvider implements ProviderInterface
 {
     protected $scopeSeparator = ' ';
-    protected $scopes = ['openid', 'profile', 'roles', 'email'];
-    protected $urlBase;
-    protected $urlAuth = '/authorize';
-    protected $urlToken = '/access_token';
-    protected $urlUserToken = '/userinfo';
-    protected $urlTokenRevoke = '/token/revoke';
-    protected $urlEndSession = '/connect/endSession';
+    protected $scopes = [];
+    protected $urlAuth;
+    protected $urlToken;
+    protected $urlUserToken;
+    protected $urlTokenRevoke;
+    protected $urlEndSession;
     protected $accessToken;
 
     /**
@@ -35,11 +35,21 @@ class IDUProvider extends AbstractProvider implements ProviderInterface
     public function __construct(Request $request, $clientId, $clientSecret, $redirectUrl, $guzzle = [])
     {
         parent::__construct($request, $clientId, $clientSecret, $redirectUrl, $guzzle);
+        // url base para el archivo de configuración
+        $urlBase = config('services.idu.url');
+        // permisos de los datos que necesitamos del usuario
         $scopes = config('services.idu.scopes');
-        if ($scopes !== null && $scopes !== '') {
+        if (!empty($scopes)) {
             $this->scopes = preg_split('/[,+\s]+/', $scopes);
         }
-        $this->urlBase = config('services.idu.url');
+        // accedemos  a la url donde esta la configuración de rutas del OAuth2
+        $response = Http::get($urlBase . '/.well-known/openid-configuration');
+        // rutas de autorización, token, datos y cierre de sesión
+        $this->urlAuth = $response['authorization_endpoint'];
+        $this->urlToken = $response['token_endpoint'];
+        $this->urlUserToken = $response['userinfo_endpoint'];
+        $this->urlTokenRevoke = $response['revocation_endpoint'];
+        $this->urlEndSession = $response['end_session_endpoint'];
     }
 
     /**
@@ -77,17 +87,9 @@ class IDUProvider extends AbstractProvider implements ProviderInterface
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function logout($token, $redirect_url)
+    public function getLogoutUrl()
     {
-        // Cerrar sesion en IDU
-        $response = $this->getHttpClient()->get($this->urlBase . $this->urlEndSession, [
-            RequestOptions::QUERY => [
-                'id_token_hint' => $token,
-                'client_id' => $this->clientId,
-                'post_logout_redirect_uri' => $redirect_url,
-            ],
-        ]);
-        return json_decode((string) $response->getBody(), true);
+        return $this->urlEndSession;
     }
 
     /**
@@ -101,7 +103,7 @@ class IDUProvider extends AbstractProvider implements ProviderInterface
      */
     public function revokeToken($token)
     {
-        $response = $this->getHttpClient()->post($this->urlBase . $this->urlTokenRevoke, [
+        $response = $this->getHttpClient()->post($this->urlTokenRevoke, [
             RequestOptions::HEADERS => [
                 'Accept' => 'application/json',
                 'Authorization' => 'Basic ' . base64_encode("{$this->clientId}:{$this->clientSecret}"),
@@ -141,7 +143,7 @@ class IDUProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase($this->urlBase . $this->urlAuth, $state);
+        return $this->buildAuthUrlFromBase($this->urlAuth, $state);
     }
 
     /**
@@ -151,7 +153,7 @@ class IDUProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getTokenUrl()
     {
-        return $this->urlBase . $this->urlToken;
+        return $this->urlToken;
     }
 
     /**
@@ -165,7 +167,7 @@ class IDUProvider extends AbstractProvider implements ProviderInterface
      */
     protected function getUserByToken($token)
     {
-        $response = $this->getHttpClient()->get($this->urlBase . $this->urlUserToken, [
+        $response = $this->getHttpClient()->get($this->urlUserToken, [
             RequestOptions::HEADERS => [
                 'Authorization' => 'Bearer ' . $token,
             ],

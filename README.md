@@ -103,7 +103,7 @@ git clone https://kwira-kaab.unam.mx/DGTIC/DCV/capacitacion/laravel-2026-alumnos
 **Moverse a la carpeta del proyecto**
 
 ```shell
-cd proyecto-base-laravel-12
+cd laravel-2026-alumnos
 ```
 
 **Moverse a la rama develop**
@@ -133,9 +133,9 @@ cp .env.example .env
 
 ```shell
 cd ..
-chmod -R gu+w proyecto-base-laravel-12
-chmod -R guo+w proyecto-base-laravel-12
-cd proyecto-base-laravel-12
+chmod -R gu+w laravel-2026-alumnos
+chmod -R guo+w laravel-2026-alumnos
+cd laravel-2026-alumnos
 ```
 
 **Ejecutar el comando para crear y levantar los servicios**

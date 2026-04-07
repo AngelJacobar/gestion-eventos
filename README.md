@@ -1,4 +1,4 @@
-# Proyecto Base Laravel 12
+# Curso Laravel/Livewire 2026 - Repositorio para alumnos
 
 _________________
 
@@ -97,7 +97,7 @@ _________________
 **Clonación del repositorio en el directorio `proyecto-base-laravel-12/`**
 
 ```shell
-git clone https://kwira-kaab.unam.mx/DGTIC/DCV/SSI/proyectos-base/proyecto-base-laravel-12.git
+git clone https://kwira-kaab.unam.mx/DGTIC/DCV/capacitacion/laravel-2026-alumnos.git          
 ```
 
 **Moverse a la carpeta del proyecto**
@@ -206,9 +206,6 @@ sail psql
 - Acceder a meilisearch desde el navegador:
 
 [http://localhost:7700/](http://localhost:7700/)
-
-
-
 
 
 _________________

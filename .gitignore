@@ -37,3 +37,4 @@ database/flyway/flyway.cmd
 database/flyway/README.txt
 composer.lock
 package-lock.json
+venv/

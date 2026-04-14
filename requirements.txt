@@ -1,0 +1,6 @@
+# Dependencias para el script de poblado de base de datos (poblar_base_datos.py)
+# Instalación: pip install -r requirements.txt
+
+psycopg2-binary==2.9.9  # Adaptador PostgreSQL para Python - conecta con la base de datos
+Faker==24.0.0           # Generador de datos falsos realistas (nombres, emails, fechas, etc.)
+bcrypt==4.1.2           # Hasheo seguro de contraseñas (compatible con Laravel)

@@ -33,6 +33,8 @@ class Usuario extends Authenticatable
         'curp',
         'numero_cuenta',
         'numero_trabajador',
+        'telefono',
+        'id_rol',
         'password',
     ];
 

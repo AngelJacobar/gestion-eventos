@@ -21,6 +21,8 @@ return new class() extends Migration {
             $table->string('curp')->unique()->nullable()->comment('CURP del usuario.');
             $table->string('numero_cuenta')->unique()->nullable()->comment('Número de cuenta del alumno.');
             $table->string('numero_trabajador')->unique()->nullable()->comment('Número de trabajador.');
+            $table->string('telefono', 10)->nullable()->comment('Número de teléfono del usuario, por ejemplo: 5512345678.');
+            $table->unsignedBigInteger('id_rol')->nullable()->comment('Identificador del rol principal del usuario.');
             $table->timestamp('email_verified_at')->nullable()->comment('Campo usado por laravel para verificar el email.');
             $table->string('password')->comment('Password cifrado del usuario.');
             $table->rememberToken()->comment('Campo usado por laravel para saber si debe recordar el token.');

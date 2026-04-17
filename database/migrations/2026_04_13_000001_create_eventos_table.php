@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('fecha_fin')->comment('Fecha de finalización del evento.');
             $table->string('lugar', 255)->comment('Lugar donde se realizará el evento, por ejemplo: Auditorio Principal.');
             $table->integer('capacidad')->comment('Capacidad máxima de asistentes al evento, por ejemplo: 500.');
+            $table->char('activo', 1)->default('S')->comment('Indica si el evento está activo: S = Sí, N = No.');
             $table->timestamp('created_at')->comment('Fecha y hora de creación del registro.');
             $table->timestamp('updated_at')->nullable()->comment('Fecha y hora de última modificación del registro.');
         });

@@ -2,6 +2,7 @@ import './bootstrap';
 
 // Timer
 import timer from './sesion';
+
 window.timer = timer;
 
 

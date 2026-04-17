@@ -15,5 +15,6 @@ return [
     'pagina_no_existe' => 'La página solicitada no existe. Por favor, seleccione una opción del menú principal.',
     'pagina_expirada' => 'La página ha expirado. Intente nuevamente.',
     'error_servidor' => 'Ocurrió un error interno en el servidor. Por favor, comuníquese con el administrador del sistema.',
+    'errores_formulario' => 'Por favor, revise los errores en el formulario e intente nuevamente.',
 
 ];

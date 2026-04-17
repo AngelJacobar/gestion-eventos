@@ -41,13 +41,103 @@ def conectar_db():
         exit(1)
 
 
+def preservar_usuario_admin(conn):
+    """Guarda los datos del usuario administrador antes de limpiar."""
+    cursor = conn.cursor()
+    
+    # Guardar datos del usuario admin
+    cursor.execute("""
+        SELECT nombre, primer_apellido, segundo_apellido, email, curp, password
+        FROM usuario
+        WHERE email = 'admin@mail.com'
+        LIMIT 1;
+    """)
+    admin_data = cursor.fetchone()
+    
+    # Guardar rol del admin
+    admin_role_id = None
+    if admin_data:
+        cursor.execute("""
+            SELECT role_id 
+            FROM model_has_roles 
+            WHERE model_type = 'App\\Models\\Usuario' 
+            AND model_id = (SELECT id_usuario FROM usuario WHERE email = 'admin@mail.com')
+            LIMIT 1;
+        """)
+        role_result = cursor.fetchone()
+        if role_result:
+            admin_role_id = role_result[0]
+    
+    cursor.close()
+    return admin_data, admin_role_id
+
+
+def restaurar_usuario_admin(conn, admin_data, admin_role_id):
+    """Restaura el usuario administrador después de limpiar las tablas."""
+    if not admin_data:
+        print("⚠ No se encontró usuario admin para restaurar")
+        return
+    
+    cursor = conn.cursor()
+    
+    try:
+        # Obtener el id_rol de 'administrador'
+        cursor.execute("SELECT id FROM roles WHERE name = 'administrador' LIMIT 1;")
+        role_result = cursor.fetchone()
+        
+        if not role_result:
+            print("⚠ No se encontró el rol 'administrador'. El usuario admin no se restaurará.")
+            cursor.close()
+            return
+        
+        id_rol_admin = role_result[0]
+        
+        # Restaurar usuario admin
+        nombre, primer_apellido, segundo_apellido, email, curp, password = admin_data
+        
+        cursor.execute("""
+            INSERT INTO usuario (
+                nombre, primer_apellido, segundo_apellido, email, curp, 
+                id_rol, password, created_at, updated_at
+            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            RETURNING id_usuario;
+        """, (
+            nombre, primer_apellido, segundo_apellido, email, curp,
+            id_rol_admin, password, datetime.now(), datetime.now()
+        ))
+        
+        id_usuario_admin = cursor.fetchone()[0]
+        
+        # Restaurar relación en model_has_roles
+        if admin_role_id:
+            cursor.execute("""
+                INSERT INTO model_has_roles (role_id, model_type, model_id)
+                VALUES (%s, %s, %s)
+                ON CONFLICT DO NOTHING;
+            """, (admin_role_id, 'App\\Models\\Usuario', id_usuario_admin))
+        
+        conn.commit()
+        print(f"✓ Usuario administrador restaurado (admin@mail.com)")
+        
+    except Exception as e:
+        print(f"✗ Error al restaurar usuario admin: {e}")
+        conn.rollback()
+    finally:
+        cursor.close()
+
+
 def limpiar_tablas(conn):
     """Limpia todas las tablas en orden inverso a las dependencias."""
     cursor = conn.cursor()
+    
+    # Primero preservar el usuario admin
+    print("\n--- Preservando usuario administrador ---")
+    admin_data, admin_role_id = preservar_usuario_admin(conn)
+    
     tablas = [
         'respuesta_encuesta',
         'asistente_evento',
-        'sesion_evento',
+        'sesion',
         'pregunta',
         'evento',
         'usuario',
@@ -63,6 +153,10 @@ def limpiar_tablas(conn):
     
     conn.commit()
     cursor.close()
+    
+    # Restaurar el usuario admin
+    print("\n--- Restaurando usuario administrador ---")
+    restaurar_usuario_admin(conn, admin_data, admin_role_id)
 
 
 def generar_curp():
@@ -286,6 +380,7 @@ def poblar_eventos(conn, cantidad):
         
         lugar = random.choice(lugares)
         capacidad = random.choice([50, 100, 150, 200, 300, 500])
+        activo = 'N' if random.random() > 0.9 else 'S'
         
         eventos.append((
             nombre,
@@ -293,14 +388,15 @@ def poblar_eventos(conn, cantidad):
             fecha_fin,
             lugar,
             capacidad,
+            activo,
             datetime.now(),
             datetime.now()
         ))
     
     query = """
         INSERT INTO evento (
-            nombre, fecha_inicio, fecha_fin, lugar, capacidad, created_at, updated_at
-        ) VALUES (%s, %s, %s, %s, %s, %s, %s)
+            nombre, fecha_inicio, fecha_fin, lugar, capacidad, activo, created_at, updated_at
+        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING id_evento;
     """
     
@@ -316,11 +412,44 @@ def poblar_eventos(conn, cantidad):
 
 
 def poblar_sesiones(conn, ids_eventos, sesiones_por_evento):
-    """Pobla la tabla sesion_evento con datos de ejemplo."""
+    """Pobla la tabla sesion con datos de ejemplo."""
     cursor = conn.cursor()
     sesiones = []
     
     print(f"\n--- Generando sesiones para {len(ids_eventos)} eventos ---")
+    
+    nombres_sesiones = [
+        "Introducción a Machine Learning",
+        "Fundamentos de Deep Learning",
+        "Procesamiento de Lenguaje Natural",
+        "Visión por Computadora Avanzada",
+        "Desarrollo de APIs REST",
+        "Arquitecturas Microservicios",
+        "Seguridad en Aplicaciones Web",
+        "Desarrollo Frontend Moderno",
+        "Bases de Datos NoSQL",
+        "Cloud Computing y DevOps",
+        "Inteligencia Artificial Aplicada",
+        "Blockchain y Criptomonedas",
+        "Internet de las Cosas (IoT)",
+        "Análisis de Datos con Python",
+        "Desarrollo Móvil Multiplataforma",
+        "Realidad Virtual y Aumentada",
+        "Ciberseguridad Avanzada",
+        "Automatización de Procesos",
+        "Big Data y Analytics",
+        "Computación Cuántica",
+        "Redes Neuronales Convolucionales",
+        "Desarrollo Ágil con Scrum",
+        "Testing y Calidad de Software",
+        "Diseño de Interfaces de Usuario",
+        "Gestión de Proyectos de TI",
+        "Emprendimiento Tecnológico",
+        "Ética en la Inteligencia Artificial",
+        "Transformación Digital",
+        "Innovación y Creatividad Tech",
+        "Robótica y Automatización"
+    ]
     
     ponentes = [
         "Dr. Juan Pérez García",
@@ -400,21 +529,25 @@ def poblar_sesiones(conn, ids_eventos, sesiones_por_evento):
             hora_inicio = datetime.strptime(inicio_str, "%H:%M").time()
             hora_fin = datetime.strptime(fin_str, "%H:%M").time()
             ponente = random.choice(ponentes)
+            nombre_sesion = random.choice(nombres_sesiones)
+            activo = 'N' if random.random() > 0.9 else 'S'
             
             sesiones.append((
+                nombre_sesion,
                 id_evento,
                 fecha_sesion,
                 hora_inicio,
                 hora_fin,
                 ponente,
+                activo,
                 datetime.now(),
                 datetime.now()
             ))
     
     query = """
-        INSERT INTO sesion_evento (
-            id_evento, fecha, hora_inicio, hora_fin, ponente, created_at, updated_at
-        ) VALUES (%s, %s, %s, %s, %s, %s, %s);
+        INSERT INTO sesion (
+            nombre, id_evento, fecha, hora_inicio, hora_fin, ponente, activo, created_at, updated_at
+        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
     """
     
     execute_batch(cursor, query, sesiones)
@@ -584,7 +717,7 @@ def mostrar_resumen(conn):
     tablas = [
         ('usuario', 'id_usuario'),
         ('evento', 'id_evento'),
-        ('sesion_evento', 'id_sesion'),
+        ('sesion', 'id_sesion'),
         ('pregunta', 'id_pregunta'),
         ('asistente_evento', 'id_asistente_evento'),
         ('respuesta_encuesta', 'id_respuesta_encuesta')
@@ -597,9 +730,13 @@ def mostrar_resumen(conn):
     
     print("="*60)
     print("\n✓ Base de datos poblada exitosamente!")
-    print("\nCredenciales de prueba:")
-    print("  - Email: [cualquier usuario]@unam.mx")
-    print("  - Password: password")
+    print("\nCredenciales de acceso:")
+    print("\n  【Administrador】")
+    print("    Email:    admin@mail.com")
+    print("    Password: password")
+    print("\n  【Usuarios de prueba】")
+    print("    Email:    [cualquier usuario]@unam.mx")
+    print("    Password: password")
     print("\n")
     
     cursor.close()

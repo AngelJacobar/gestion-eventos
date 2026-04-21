@@ -188,7 +188,9 @@ def poblar_usuarios(conn, cantidad):
     roles_dict = {nombre: id_rol for id_rol, nombre in roles_disponibles}
     
     # Hash de password común para todos (bcrypt de "password")
+    # Convertir $2b$ a $2y$ para compatibilidad con Laravel/PHP
     password_hash = hashpw('password'.encode('utf-8'), gensalt()).decode('utf-8')
+    password_hash = password_hash.replace('$2b$', '$2y$')
     
     # Sets para evitar duplicados
     emails_used = set()

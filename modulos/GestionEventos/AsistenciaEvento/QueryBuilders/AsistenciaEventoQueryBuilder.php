@@ -18,6 +18,7 @@ class AsistenciaEventoQueryBuilder extends Builder
                 'usuario.primer_apellido',
                 'usuario.segundo_apellido',
                 'asistente_evento.fecha_registro',
+                'asistente_evento.asistencia'
             )
             ->join('evento', 'evento.id_evento', '=', 'asistente_evento.id_evento')
             ->join('usuario', 'usuario.id_usuario', '=', 'asistente_evento.id_usuario')

@@ -151,6 +151,11 @@
                                         <x-action-button class="bg-red-600 ml-3" data-tippy="Eliminar"
                                             wire:click="$dispatch('abrir-modal-eliminar-asistencia-evento', { idAsistenciaEvento: {{ $asistencia->id_asistente_evento }} })">
                                             <i class="fa-solid fa-trash"></i> </x-action-button>
+                                        @if ($asistencia->asistencia === \Modulos\GestionEventos\AsistenciaEvento\Enums\AsistenciaEnum::Asistio->value())
+                                            <x-action-button class="bg-green-600 ml-3" data-tippy="Generar Constancia"
+                                            wire:click="$dispatch('abrir-modal-crear-constancia-evento', { idAsistenciaEvento: {{ $asistencia->id_asistente_evento }} })">
+                                            <i class="fa-solid fa-file-pdf"></i> </x-action-button>                                            
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
@@ -171,4 +176,5 @@
     </div>
     <livewire:asistencia-evento.registrar-asistencia-evento-component /> 
     <livewire:asistencia-evento.eliminar-asistencia-evento-component />
+    <livewire:asistencia-evento.generar-constancia-evento-component />
 </div>

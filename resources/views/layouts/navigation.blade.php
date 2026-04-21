@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('calendario-eventos')" :active="request()->routeIs('calendario-eventos')">
-                            {{ __('Calendario de eventos') }}
+                        {{ __('Calendario de eventos') }}
                     </x-nav-link>
                     @canany(['consultar-listado-usuarios', 'registrar-usuario', 'cambiar-estatus-usuario'])
                         <x-nav-link :href="route('admin.usuarios.index')" :active="request()->routeIs('admin.usuarios.index')">
@@ -38,11 +38,21 @@
                             {{ __('Administración de sesiones') }}
                         </x-nav-link>
                     @endcanany
-                    @canany(['consultar-listado-asistencias-evento', 'registrar-asistencia-evento'])
-                        <x-nav-link :href="route('admin.asistencias-evento.index')" :active="request()->routeIs('admin.asistencias-evento.index')">
-                            {{ __('Administración de asistencias a eventos') }}
-                        </x-nav-link>
-                    @endcanany
+                    @auth
+                        @if (auth()->user()->hasRole('administrador') || auth()->user()->hasRole('Organizador'))
+                            @canany(['consultar-listado-asistencias-evento', 'registrar-asistencia-evento'])
+                                <x-nav-link :href="route('admin.asistencias-evento.index')" :active="request()->routeIs('admin.asistencias-evento.index')">
+                                    {{ __('Administración de asistencias a eventos') }}
+                                </x-nav-link>
+                            @endcanany
+                        @else
+                            @canany(['consultar-listado-asistencias-evento', 'registrar-asistencia-evento'])
+                                <x-nav-link :href="route('admin.asistencias-evento.index')" :active="request()->routeIs('admin.asistencias-evento.index')">
+                                    {{ __('Mis asistencias a eventos') }}
+                                </x-nav-link>
+                            @endcanany
+                        @endif
+                    @endauth
                 </div>
             </div>
 
@@ -109,8 +119,8 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             <x-nav-link :href="route('calendario-eventos')" :active="request()->routeIs('calendario-eventos')">
-                            {{ __('Calendario de eventos') }}
-                        </x-nav-link>
+                {{ __('Calendario de eventos') }}
+            </x-nav-link>
             @canany(['consultar-listado-usuarios', 'registrar-usuario', 'cambiar-estatus-usuario'])
                 <x-responsive-nav-link :href="route('admin.usuarios.index')" :active="request()->routeIs('admin.usuarios.index')">
                     {{ __('Administración de usuarios') }}
@@ -131,11 +141,22 @@
                     {{ __('Administración de sesiones') }}
                 </x-nav-link>
             @endcanany
-            @canany(['consultar-listado-asistencias-evento', 'registrar-asistencia-evento'])
-                <x-nav-link :href="route('admin.asistencias-evento.index')" :active="request()->routeIs('admin.asistencias-evento.index')">
-                    {{ __('Administración de asistencias a eventos') }}
-                </x-nav-link>
-            @endcanany
+            @auth
+                @if (auth()->user()->hasRole('administrador') || auth()->user()->hasRole('Organizador'))
+                    @canany(['consultar-listado-asistencias-evento', 'registrar-asistencia-evento'])
+                        <x-nav-link :href="route('admin.asistencias-evento.index')" :active="request()->routeIs('admin.asistencias-evento.index')">
+                            {{ __('Administración de asistencias a eventos') }}
+                        </x-nav-link>
+                    @endcanany
+                @else
+                    @canany(['consultar-listado-asistencias-evento', 'registrar-asistencia-evento'])
+                        <x-nav-link :href="route('admin.asistencias-evento.index')" :active="request()->routeIs('admin.asistencias-evento.index')">
+                            {{ __('Mis asistencias a eventos') }}
+                        </x-nav-link>
+                    @endcanany
+                @endif
+            @endauth
+
         </div>
 
         <!-- Responsive Settings Options -->

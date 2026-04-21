@@ -93,6 +93,16 @@
                                     </h6>
                                     <p class="text-base font-normal text-gray-600">{{ $evento->lugar }}</p>
                                     <p class="text-sm text-gray-400 mt-1">Capacidad: {{ $evento->capacidad }}</p>
+
+                                    <!-- Mostrar las sesiones asociadas al evento -->
+                                    <ul class="mt-2 space-y-2">
+                                        @foreach ($evento->sesiones as $sesion)
+                                            <li class="text-gray-700">
+                                                <strong>Sesión:</strong> {{ $sesion->nombre }} <br>
+                                                <strong>Horario:</strong> {{ $sesion->hora_inicio }} - {{ $sesion->hora_fin }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 </div>
                             @empty
                                 <p class="text-gray-500">No hay eventos para este mes.</p>

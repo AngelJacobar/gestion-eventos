@@ -19,7 +19,12 @@ class EventoQueryBuilder extends Builder
                 'evento.capacidad',
                 'evento.activo'
             )
-                    ->where('evento.activo', EstatusEnum::Activo->value)
+            ->where('evento.activo', EstatusEnum::Activo->value)
         ;
+    }
+
+    public function conSesiones()
+    {
+        return $this->with('sesiones');
     }
 }

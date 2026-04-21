@@ -209,8 +209,10 @@
             </div>
         </div>
     </section>
-    <legend class="text-sm text-gray-400 text-center">
-        Para inscribirte a un evento, primero debes iniciar sesión y contar con un registro previo. Si aún no estás
-        registrado, acércate a un organizador para que realice tu registro.
-    </legend>
+    @guest
+        <legend class="text-sm text-gray-400 text-center">
+            Para inscribirte a un evento, primero debes iniciar sesión y contar con un registro previo. Si aún no estás
+            registrado, acércate a un organizador para que realice tu registro.
+        </legend>
+    @endguest
 </div>

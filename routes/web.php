@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-    Route::get('/', MostrarEventosComponent::class);
+    Route::get('/', MostrarEventosComponent::class)->name('calendario-eventos');
 
 Route::get('/inicio', function () {
     return view('dashboard');

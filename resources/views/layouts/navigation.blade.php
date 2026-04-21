@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('calendario-eventos')" :active="request()->routeIs('calendario-eventos')">
+                            {{ __('Calendario de eventos') }}
+                    </x-nav-link>
                     @canany(['consultar-listado-usuarios', 'registrar-usuario', 'cambiar-estatus-usuario'])
                         <x-nav-link :href="route('admin.usuarios.index')" :active="request()->routeIs('admin.usuarios.index')">
                             {{ __('Administración de usuarios') }}
@@ -105,6 +108,9 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-nav-link :href="route('calendario-eventos')" :active="request()->routeIs('calendario-eventos')">
+                            {{ __('Calendario de eventos') }}
+                        </x-nav-link>
             @canany(['consultar-listado-usuarios', 'registrar-usuario', 'cambiar-estatus-usuario'])
                 <x-responsive-nav-link :href="route('admin.usuarios.index')" :active="request()->routeIs('admin.usuarios.index')">
                     {{ __('Administración de usuarios') }}

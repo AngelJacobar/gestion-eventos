@@ -112,37 +112,37 @@
                 <table class="min-w-full table-auto">
                     <thead>
                         <tr>
-                            <th class="w-[16%]">
+                            <th class="w-[25%]">
                                 <div class="cursor-pointer" wire:click="order('nombre')">
                                     Nombre
                                     <span class="">@sortIcon('nombre', $sort, $direction)</span>
                                 </div>
                             </th>
-                            <th class="w-[16%]">
+                            <th class="w-[25%]">
                                 <div class="cursor-pointer" wire:click="order('lugar')">
                                     Lugar
                                     <span class="">@sortIcon('lugar', $sort, $direction)</span>
                                 </div>
                             </th>
-                            <th class="w-[16%]">
+                            <th class="w-[12%]">
                                 <div class="cursor-pointer" wire:click="order('fecha_inicio')">
                                     Fecha de inicio
                                     <span class="">@sortIcon('fecha_inicio', $sort, $direction)</span>
                                 </div>
                             </th>
-                            <th class="w-[17%]">
+                            <th class="w-[12%]">
                                 <div class="cursor-pointer" wire:click="order('fecha_fin')">
                                     Fecha de finalización
                                     <span class="">@sortIcon('fecha_fin', $sort, $direction)</span>
                                 </div>
                             </th>
-                            <th class="w-[15%]">
+                            <th class="w-[8%]">
                                 <div class="cursor-pointer" wire:click="order('capacidad')">
                                     Capacidad
                                     <span class="">@sortIcon('capacidad', $sort, $direction)</span>
                                 </div>
                             </th>
-                            <th class="w-[15%]">
+                            <th class="w-[8%]">
                                 <div class="cursor-pointer" wire:click="order('activo')">
                                     Estado
                                     <span class="">@sortIcon('activo', $sort, $direction)</span>
@@ -188,4 +188,5 @@
 
     </div>
     <livewire:eventos.registrar-evento-component />
+    <livewire:eventos.eliminar-evento-component />
 </div>

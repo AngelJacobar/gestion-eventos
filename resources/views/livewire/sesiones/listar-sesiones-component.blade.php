@@ -142,44 +142,44 @@
                 <table class="min-w-full table-auto">
                     <thead>
                         <tr>
-                            <th class="w-[16%]">
+                            <th class="w-[25%]">
                                 <div class="cursor-pointer" wire:click="order('nombre_evento')">
                                     Evento
                                     <span class="">@sortIcon('nombre_evento', $sort, $direction)</span>
                                 </div>
                             </th>
-                            <th class="w-[16%]">
+                            <th class="w-[25%]">
                                 <div class="cursor-pointer" wire:click="order('nombre')">
                                     Nombre
                                     <span class="">@sortIcon('nombre', $sort, $direction)</span>
                                 </div>
                             </th>
-                            <th class="w-[16%]">
+                            <th class="w-[25%]">
                                 <div class="cursor-pointer" wire:click="order('ponente')">
                                     Ponente
                                     <span class="">@sortIcon('ponente', $sort, $direction)</span>
                                 </div>
                             </th>
 
-                            <th class="w-[16%]">
+                            <th class="w-[7%]">
                                 <div class="cursor-pointer" wire:click="order('fecha')">
                                     Fecha
                                     <span class="">@sortIcon('fecha', $sort, $direction)</span>
                                 </div>
                             </th>
-                            <th class="w-[17%]">
+                            <th class="w-[8%]">
                                 <div class="cursor-pointer" wire:click="order('hora_inicio')">
                                     Hora de inicio
                                     <span class="">@sortIcon('hora_inicio', $sort, $direction)</span>
                                 </div>
                             </th>
-                            <th class="w-[15%]">
+                            <th class="w-[8%]">
                                 <div class="cursor-pointer" wire:click="order('hora_fin')">
                                     Hora de fin
                                     <span class="">@sortIcon('hora_fin', $sort, $direction)</span>
                                 </div>
                             </th>
-                            <th class="w-[15%]">
+                            <th class="w-[17%]">
                                 <div class="cursor-pointer" wire:click="order('activo')">
                                     Estado
                                     <span class="">@sortIcon('activo', $sort, $direction)</span>
@@ -228,4 +228,5 @@
 
     </div>
         <livewire:sesiones.registrar-sesion-component />
+        <livewire:sesiones.eliminar-sesion-component />
 </div>

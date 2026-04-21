@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Modulos\GestionEventos\Models\AsistenteEvento;
 use Spatie\Permission\Traits\HasRoles;
 
 class Usuario extends Authenticatable
@@ -76,5 +77,10 @@ class Usuario extends Authenticatable
             'password' => 'hashed',
             'activo' => EstatusEnum::class,
         ];
+    }
+
+    public function asistentes_evento()
+    {
+        return $this->hasMany(AsistenteEvento::class, 'id_usuario', 'id_usuario');
     }
 }

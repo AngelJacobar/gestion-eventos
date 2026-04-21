@@ -12,6 +12,9 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toastable;
 use Modulos\GestionEventos\Evento\Actions\ListarEventosAction;
+use Livewire\Attributes\On;
+
+
 
 class ListarEventosComponent extends Component
 {
@@ -36,6 +39,12 @@ class ListarEventosComponent extends Component
     {
         $this->restablecer();
     }
+
+    #[On('actualizar-lista-eventos')]
+    public function actualizar()
+    {
+    }
+
 
     public function filtrar()
     {

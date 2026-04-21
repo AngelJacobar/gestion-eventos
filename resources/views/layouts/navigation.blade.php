@@ -25,49 +25,63 @@
                             {{ __('Administración de roles') }}
                         </x-nav-link>
                     @endcanany
-                    <x-nav-link :href="route('admin.eventos.index')" :active="request()->routeIs('admin.eventos.index')">
-                        {{ __('Administración de eventos') }}
-                    </x-nav-link>
+                    @canany(['consultar-listado-eventos', 'registrar-evento'])
+                        <x-nav-link :href="route('admin.eventos.index')" :active="request()->routeIs('admin.eventos.index')">
+                            {{ __('Administración de eventos') }}
+                        </x-nav-link>
+                    @endcanany
+                    @canany(['consultar-listado-sesiones', 'registrar-sesion'])
+                        <x-nav-link :href="route('admin.sesiones.index')" :active="request()->routeIs('admin.sesiones.index')">
+                            {{ __('Administración de sesiones') }}
+                        </x-nav-link>
+                    @endcanany
+                    @canany(['consultar-listado-asistencias-evento', 'registrar-asistencia-evento'])
+                        <x-nav-link :href="route('admin.asistencias-evento.index')" :active="request()->routeIs('admin.asistencias-evento.index')">
+                            {{ __('Administración de asistencias a eventos') }}
+                        </x-nav-link>
+                    @endcanany
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden lg:flex lg:items-center lg:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button
-                            class="inline-flex items-center text-sm leading-4 font-medium rounded-md text-white bg-white bg-opacity-20  hover:text-primario-100  px-3 py-2  focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->nombreCompleto }}</div>
+            @auth
+                <div class="hidden lg:flex lg:items-center lg:ms-6">
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button
+                                class="inline-flex items-center text-sm leading-4 font-medium rounded-md text-white bg-white bg-opacity-20  hover:text-primario-100  px-3 py-2  focus:outline-none transition ease-in-out duration-150">
+                                <div>{{ Auth::user()->nombreCompleto }}</div>
 
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
+                                <div class="ms-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
 
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Cambiar contraseña') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form id="logout-form" method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('profile.edit')">
+                                {{ __('Cambiar contraseña') }}
                             </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
+
+                            <!-- Authentication -->
+                            <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
+            @endauth
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center lg:hidden">
@@ -101,34 +115,48 @@
                     {{ __('Administración de roles') }}
                 </x-responsive-nav-link>
             @endcanany
-            <x-nav-link :href="route('admin.eventos.index')" :active="request()->routeIs('admin.eventos.index')">
-                {{ __('Administración de eventos') }}
-            </x-nav-link>
+            @canany(['consultar-listado-eventos', 'registrar-evento'])
+                <x-nav-link :href="route('admin.eventos.index')" :active="request()->routeIs('admin.eventos.index')">
+                    {{ __('Administración de eventos') }}
+                </x-nav-link>
+            @endcanany
+            @canany(['consultar-listado-sesiones', 'registrar-sesion'])
+                <x-nav-link :href="route('admin.sesiones.index')" :active="request()->routeIs('admin.sesiones.index')">
+                    {{ __('Administración de sesiones') }}
+                </x-nav-link>
+            @endcanany
+            @canany(['consultar-listado-asistencias-evento', 'registrar-asistencia-evento'])
+                <x-nav-link :href="route('admin.asistencias-evento.index')" :active="request()->routeIs('admin.asistencias-evento.index')">
+                    {{ __('Administración de asistencias a eventos') }}
+                </x-nav-link>
+            @endcanany
         </div>
 
         <!-- Responsive Settings Options -->
-        <div class="pb-1 border-t border-primario-300">
-            <div class="px-4 py-1 bg-primario-700 text-center">
-                <div class="font-bold text-base text-white">{{ Auth::user()->nombreCompleto }}</div>
-                <!-- <div class="font-medium text-sm text-primario-800 ">{{ Auth::user()->email }}</div> -->
-            </div>
+        @auth
+            <div class="pb-1 border-t border-primario-300">
+                <div class="px-4 py-1 bg-primario-700 text-center">
+                    <div class="font-bold text-base text-white">{{ Auth::user()->nombreCompleto }}</div>
+                    <!-- <div class="font-medium text-sm text-primario-800 ">{{ Auth::user()->email }}</div> -->
+                </div>
 
-            <div class="space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Cambiar contraseña') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                        onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                <div class="space-y-1">
+                    <x-responsive-nav-link :href="route('profile.edit')">
+                        {{ __('Cambiar contraseña') }}
                     </x-responsive-nav-link>
-                </form>
+
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-responsive-nav-link>
+                    </form>
+                </div>
             </div>
-        </div>
+        @endauth
     </div>
 </nav>

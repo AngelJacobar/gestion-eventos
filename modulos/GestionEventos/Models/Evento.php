@@ -31,6 +31,11 @@ class Evento extends Model
         return $this->hasMany(Sesion::class, 'id_evento', 'id_evento');
     }
 
+    public function asistentes_evento()
+    {
+        return $this->hasMany(AsistenteEvento::class, 'id_evento', 'id_evento');
+    }
+
     public function newEloquentBuilder($query)
     {
         return new EventoQueryBuilder($query);

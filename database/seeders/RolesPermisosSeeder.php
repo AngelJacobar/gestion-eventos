@@ -23,6 +23,20 @@ class RolesPermisosSeeder extends Seeder
         Permission::create(['name' => 'registrar-rol']);
         Permission::create(['name' => 'consultar-listado-roles']);
 
+        Permission::create(['name' => 'registrar-evento']);
+        Permission::create(['name' => 'consultar-listado-eventos']);
+        Permission::create(['name' => 'editar-evento']);
+        Permission::create(['name' => 'eliminar-evento']);
+
+        Permission::create(['name' => 'registrar-sesion']);
+        Permission::create(['name' => 'consultar-listado-sesiones']);
+        Permission::create(['name' => 'editar-sesion']);
+        Permission::create(['name' => 'eliminar-sesion']);
+
+        Permission::create(['name' => 'registrar-asistencia-evento']);
+        Permission::create(['name' => 'consultar-listado-asistencias-evento']);
+        Permission::create(['name' => 'registrar-asistencia-sesion']);
+
         $role = Role::findByName('administrador');
 
         $role->givePermissionTo('registrar-usuario');

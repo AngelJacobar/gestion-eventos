@@ -3,17 +3,14 @@
 namespace App\Livewire\Eventos;
 
 use Livewire\Component;
-use App\Enums\EstatusEnum;
 use App\Livewire\Forms\Eventos\RegistrarEventosForm;
 use App\Traits\WithLiveValidation;
 use App\Traits\WithTrimArreglosRecursivos;
 use Illuminate\Support\Facades\Auth;
 use League\Config\Exception\ValidationException;
-use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Masmerise\Toaster\Toastable;
 use Modulos\GestionEventos\Evento\Actions\RegistrarEventosAction;
-use Modulos\GestionEventos\Models\Evento;
 
 class RegistrarEventoComponent extends Component
 {

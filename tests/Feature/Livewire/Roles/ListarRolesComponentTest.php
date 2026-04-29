@@ -26,7 +26,7 @@ class ListarRolesComponentTest extends TestCase
         Role::create(['name' => 'rol-para-pruebas']);
     }
 
-    /** @test */
+    #[Test]
     public function renders_successfully()
     {
         $users = Usuario::all();
@@ -42,7 +42,7 @@ class ListarRolesComponentTest extends TestCase
             ->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function filtrar_correctamente()
     {
         $users = Usuario::all();
@@ -59,7 +59,7 @@ class ListarRolesComponentTest extends TestCase
             ->assertSee('rol-para-pruebas');
     }
 
-    /** @test */
+    #[Test]
     public function redirigir_al_login_si_no_se_esta_autenticado()
     {
         $this->get(route('admin.roles.index'))

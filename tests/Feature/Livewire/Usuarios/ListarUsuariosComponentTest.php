@@ -11,6 +11,7 @@ use Database\Seeders\DatabaseSeeder;
 use Database\Seeders\RolesPermisosSeeder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ListarUsuariosComponentTest extends TestCase
@@ -43,7 +44,7 @@ class ListarUsuariosComponentTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function renders_successfully()
     {
         $users = Usuario::all();
@@ -59,7 +60,7 @@ class ListarUsuariosComponentTest extends TestCase
             ->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function filtrar_correctamente()
     {
         $users = Usuario::all();
@@ -77,7 +78,7 @@ class ListarUsuariosComponentTest extends TestCase
             ->assertSee('Segundo Apellido assert');
     }
 
-    /** @test */
+    #[Test]
     public function redirigir_al_login_si_no_se_esta_autenticado()
     {
         $this->get(route('admin.usuarios.index'))

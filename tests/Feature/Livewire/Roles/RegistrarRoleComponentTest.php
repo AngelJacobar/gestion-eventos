@@ -25,7 +25,7 @@ class RegistrarRoleComponentTest extends TestCase
         $seeder->call(RolesPermisosSeeder::class);
         $seeder->call(AccionSeeder::class);
     }
-    /** @test */
+    #[Test]
     public function renders_successfully()
     {
         $users = Usuario::all();
@@ -38,7 +38,7 @@ class RegistrarRoleComponentTest extends TestCase
         Livewire::test(RegistrarRolComponent::class)
             ->assertStatus(200);
     }
-    /** @test */
+    #[Test]
     public function registrar_rol()
     {
         Toaster::fake();
@@ -68,7 +68,7 @@ class RegistrarRoleComponentTest extends TestCase
         $this->assertEquals(2, count($permisos));
     }
 
-    /** @test */
+    #[Test]
     public function editar_rol()
     {
         Toaster::fake();
@@ -99,7 +99,7 @@ class RegistrarRoleComponentTest extends TestCase
         $this->assertEquals(1, count($permisos));
     }
 
-    /** @test */
+    #[Test]
     public function redirigir_al_login_si_no_se_esta_autenticado()
     {
         $this->get(route('admin.roles.index'))

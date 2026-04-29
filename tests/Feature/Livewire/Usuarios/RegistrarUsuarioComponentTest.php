@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
 use Masmerise\Toaster\Toaster;
 use Modulos\Usuarios\Notifications\UsuarioRegistradoNotification;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class RegistrarUsuarioComponentTest extends TestCase
@@ -25,7 +26,7 @@ class RegistrarUsuarioComponentTest extends TestCase
         $seeder->call(AccionSeeder::class);
         $seeder->call(RolesPermisosSeeder::class);
     }
-    /** @test */
+    #[Test]
     public function renders_successfully()
     {
         $users = Usuario::all();
@@ -39,7 +40,7 @@ class RegistrarUsuarioComponentTest extends TestCase
             ->assertStatus(200);
     }
 
-    /** @test */
+    #[Test]
     public function registrar_un_usuario()
     {
         Toaster::fake();
@@ -89,7 +90,7 @@ class RegistrarUsuarioComponentTest extends TestCase
         Notification::assertCount(2);
     }
 
-    /** @test */
+    #[Test]
     public function editar_usuario()
     {
         Toaster::fake();
@@ -131,7 +132,7 @@ class RegistrarUsuarioComponentTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function redirigir_al_login_si_no_se_esta_autenticado()
     {
         $this->get(route('admin.usuarios.index'))

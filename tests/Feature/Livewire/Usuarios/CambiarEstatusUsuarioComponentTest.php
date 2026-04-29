@@ -43,7 +43,7 @@ class CambiarEstatusUsuarioComponentTest extends TestCase
         ]);
     }
 
-    /** @test */
+    #[Test]
     public function cambiar_estatus_correctamente()
     {
         Toaster::fake();
@@ -78,7 +78,7 @@ class CambiarEstatusUsuarioComponentTest extends TestCase
         Toaster::assertDispatched('usuarios.estatus.cierre_sesion');
     }
 
-    /** @test */
+    #[Test]
     public function redirigir_al_login_si_no_se_esta_autenticado()
     {
         $this->get(route('admin.usuarios.index'))

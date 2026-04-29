@@ -7,6 +7,8 @@ use Livewire\Attributes\On;
 use Livewire\Component;
 use Masmerise\Toaster\Toastable;
 use Modulos\GestionEventos\Models\AsistenteEvento;
+use Modulos\GestionEventos\Models\Evento;
+
 
 class GenerarConstanciaEventoComponent extends Component
 {
@@ -46,7 +48,7 @@ class GenerarConstanciaEventoComponent extends Component
             }
 
             // Obtener datos completos del evento
-            $evento = \Modulos\GestionEventos\Models\Evento::find($datosAsistencia->id_evento);
+            $evento = Evento::find($datosAsistencia->id_evento);
             
             if (!$evento) {
                 $this->error('No se encontró el evento.');

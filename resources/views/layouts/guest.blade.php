@@ -14,16 +14,15 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center bg-gradient-to-t from-primario-400 to-primario-600 ">
             <div class="my-3">
-                <a href="http://www.unam.mx" target="_blank">
-                    <x-application-logo/>
-                </a>
+                <div>
+                    <x-application-logo />
+                </div>
             </div>
             <main>
                 {{ $slot }}
             </main>
             <footer class="py-16">
-                <p class="text-center text-sm text-white"> UNAM {{ date('Y') }} </p>
-                <p class="text-center"><a href="{{ route('creditos') }}"  class=" text-sm text-white">Créditos</a></p>
+                <p class="text-center text-sm text-white"> {{ date('Y') }} </p>
             </footer>
         </div>
         @if (config('services.recaptcha.enable'))

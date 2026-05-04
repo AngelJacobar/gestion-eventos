@@ -8,6 +8,8 @@ enum RegistroTipoEnum
     case Rol;
     case Evento;
     case Sesion;
+    case Partido;
+    case Quiniela;
 
     public function registroTipo()
     {
@@ -16,6 +18,8 @@ enum RegistroTipoEnum
             self::Rol => 'rol',
             self::Evento => 'evento',
             self::Sesion => 'sesion',
+            self::Partido => 'partido',
+            self::Quiniela => 'quiniela',
         };
     }
 
@@ -26,6 +30,8 @@ enum RegistroTipoEnum
             self::Rol => 'Roles que se pueden asignar a los usuarios.',
             self::Evento => 'Eventos registrados en el sistema.',
             self::Sesion => 'Sesiones registradas en el sistema.',
+            self::Partido => 'Partidos registrados en el sistema.',
+            self::Quiniela => 'Quinielas registradas en el sistema.',
         };
     }
 }

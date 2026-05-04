@@ -15,9 +15,9 @@
             <div class="relative min-h-screen flex flex-col items-center justify-center ">
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                     <header class="flex flex-col items-center">
-                        <a href="http://www.unam.mx" target="_blank" class="my-3">
+                        <div class="my-3">
                             <x-application-logo/>
-                        </a>
+                        </div>
                     </header>
 
                     <main>
@@ -43,8 +43,7 @@
                     </main>
 
                     <footer class="py-16">
-                        <p class="text-center text-sm text-white"> UNAM {{ date('Y') }} </p>
-                        <p class="text-center"><a href="{{ route('creditos') }}"  class=" text-sm text-white">Créditos</a></p>
+                        <p class="text-center text-sm text-white"> {{ date('Y') }} </p>
                     </footer>
                 </div>
             </div>

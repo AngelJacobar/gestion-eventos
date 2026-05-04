@@ -77,7 +77,7 @@ class AuthenticationIDUTest extends TestCase
 
             $this->assertInstanceOf(RedirectResponse::class, $response);
             $this->assertInstanceOf(HttpRedirectResponse::class, $response);
-            $this->assertSame('https://enigma.unam.mx/sso/oauth2/realms/root/realms/unam/authorize?client_id=client_id&redirect_uri=redirect&scope=openid+profile+roles+email&response_type=code&state='.$state.'&nonce='.$nonce, $response->getTargetUrl());
+            $this->assertSame('https://example.com/oauth2/authorize?client_id=client_id&redirect_uri=redirect&scope=openid+profile+roles+email&response_type=code&state='.$state.'&nonce='.$nonce, $response->getTargetUrl());
         } else {
             $this->assertTrue(true);
         }

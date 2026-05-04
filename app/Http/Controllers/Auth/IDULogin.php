@@ -33,7 +33,7 @@ class IDULogin extends Controller
                 'primer_apellido' => $usuarioIDU->user['lastName'],
                 'segundo_apellido' => $usuarioIDU->user['secondLastName'],
                 'activo' => EstatusEnum::Activo,
-                'email' => $usuarioIDU->user['unamEmail'],
+                'email' => $usuarioIDU->user['email'],
                 'curp' => $curp,
                 'numero_cuenta' => $usuarioIDU->user['studentNumber'] ?? null,
                 'numero_trabajador' => $usuarioIDU->user['employeeNumber'] ?? null,

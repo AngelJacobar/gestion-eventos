@@ -17,7 +17,7 @@ return new class() extends Migration {
             $table->string('primer_apellido')->comment('Primer apellido del usuario, por ejemplo: López.');
             $table->string('segundo_apellido')->nullable()->comment('Segundo apellido del usuario, por ejemplo: Pérez.');
             $table->char('activo', length: 1)->default('S')->comment('Indica si el usuario se encuentra activo = T, inactivo = F.');
-            $table->string('email')->unique()->comment('Correo electrónico del usuario, por ejemplo: usuario_prueba@unam.mx.');
+            $table->string('email')->unique()->comment('Correo electrónico del usuario, por ejemplo: usuario_prueba@example.com.');
             $table->string('curp')->unique()->nullable()->comment('CURP del usuario.');
             $table->string('numero_cuenta')->unique()->nullable()->comment('Número de cuenta del alumno.');
             $table->string('numero_trabajador')->unique()->nullable()->comment('Número de trabajador.');

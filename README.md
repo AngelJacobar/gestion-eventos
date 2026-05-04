@@ -94,10 +94,10 @@ _________________
 
 ## Instalación {#instalacion}
 
-**Clonación del repositorio en el directorio `proyecto-base-laravel-12/`**
+**Clonación del repositorio**
 
 ```shell
-git clone https://kwira-kaab.unam.mx/DGTIC/DCV/capacitacion/laravel-2026-alumnos.git          
+git clone <URL_DEL_REPOSITORIO>          
 ```
 
 **Moverse a la carpeta del proyecto**

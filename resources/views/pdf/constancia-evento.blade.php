@@ -110,10 +110,6 @@
 <div class="pagina">
 <div class="contenido">
 
-    <div class="logo">
-        <img src="{{ public_path('img/UNAMLogo.png') }}">
-    </div>
-
     <div class="linea"></div>
 
     <div class="titulo">

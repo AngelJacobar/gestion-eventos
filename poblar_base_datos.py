@@ -207,7 +207,7 @@ def poblar_usuarios(conn, cantidad):
         activo = random.choice(['S', 'N']) if random.random() > 0.9 else 'S'
         
         # Generar email único
-        email = f"{nombre.lower()}.{primer_apellido.lower()}{i}@unam.mx"
+        email = f"{nombre.lower()}.{primer_apellido.lower()}{i}@example.com"
         
         # Generar CURP único
         curp = None
@@ -737,7 +737,7 @@ def mostrar_resumen(conn):
     print("    Email:    admin@mail.com")
     print("    Password: password")
     print("\n  【Usuarios de prueba】")
-    print("    Email:    [cualquier usuario]@unam.mx")
+    print("    Email:    [cualquier usuario]@example.com")
     print("    Password: password")
     print("\n")
     

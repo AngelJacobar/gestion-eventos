@@ -121,7 +121,7 @@ deactivate
 
 El script poblará las siguientes tablas con datos realistas:
 
-- **300 usuarios** con emails @unam.mx, CURP, números de cuenta y trabajador
+- **300 usuarios** con emails @example.com, CURP, números de cuenta y trabajador
 - **30 eventos** con nombres, fechas, lugares y capacidades variadas
 - **150 sesiones** (5 por evento) con 40 ponentes diferentes y 25 lugares
 - **15 preguntas** estándar de satisfacción (catálogo fijo aplicable a todos los eventos)
@@ -132,7 +132,7 @@ El script poblará las siguientes tablas con datos realistas:
 
 Todos los usuarios creados tienen la misma contraseña para facilitar las pruebas:
 
-- **Email:** cualquier email generado (ejemplo: `juan.lopez0@unam.mx`)
+- **Email:** cualquier email generado (ejemplo: `juan.lopez0@example.com`)
 - **Password:** `password`
 
 ## Configuración Personalizada
@@ -159,7 +159,7 @@ PORCENTAJE_ASISTENCIA = 0.7     # 70% de usuarios se inscriben
 ✓ Respuestas inteligentes según el tipo de pregunta (escala 1-10, Sí/No, calidad, opinión)  
 ✓ Maneja errores y muestra un resumen al final  
 ✓ Usa bcrypt para hashear las contraseñas  
-✓ Genera CURPs, emails @unam.mx, números de cuenta, etc.  
+✓ Genera CURPs, emails @example.com, números de cuenta, etc.  
 
 ## Solución de Problemas
 

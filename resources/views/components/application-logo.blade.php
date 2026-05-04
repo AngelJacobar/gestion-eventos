@@ -1,1 +1,1 @@
-<img src="{{URL::asset('img/UNAMhead.webp')}}" class="h-10">
+<div class="text-2xl font-bold text-white">Sistema de Eventos</div>

@@ -29,8 +29,7 @@
                 {{ $slot }}
             </main>
             <footer class="w-full text-center text-xs border-t py-4">
-                <p> UNAM {{ date('Y') }} </p>
-                <p><a href="{{ route('creditos') }}">Créditos</a></p>
+                <p> {{ date('Y') }} </p>
             </footer>
         </div>
 

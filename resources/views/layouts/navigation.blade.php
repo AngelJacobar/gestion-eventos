@@ -5,18 +5,15 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="http://www.unam.mx" target="_blank">
+                    <div>
                         <x-application-logo class="block h-9 w-auto " />
-                    </a>
+                    </div>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-2 sm:-my-px sm:ms-10 lg:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('calendario-eventos')" :active="request()->routeIs('calendario-eventos')">
-                        {{ __('Calendario de eventos') }}
                     </x-nav-link>
                     @canany(['consultar-listado-usuarios', 'registrar-usuario', 'cambiar-estatus-usuario'])
                         <x-nav-link :href="route('admin.usuarios.index')" :active="request()->routeIs('admin.usuarios.index')">
@@ -53,6 +50,12 @@
                             @endcanany
                         @endif
                     @endauth
+                    <x-nav-link :href="route('admin.partidos.index')" :active="request()->routeIs('admin.partidos.index')">
+                        {{ __('Administración de partidos') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.quinielas.index')" :active="request()->routeIs('admin.quinielas.index')">
+                        {{ __('Administración de quinielas') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -118,9 +121,6 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-nav-link :href="route('calendario-eventos')" :active="request()->routeIs('calendario-eventos')">
-                {{ __('Calendario de eventos') }}
-            </x-nav-link>
             @canany(['consultar-listado-usuarios', 'registrar-usuario', 'cambiar-estatus-usuario'])
                 <x-responsive-nav-link :href="route('admin.usuarios.index')" :active="request()->routeIs('admin.usuarios.index')">
                     {{ __('Administración de usuarios') }}
@@ -156,6 +156,12 @@
                     @endcanany
                 @endif
             @endauth
+            <x-nav-link :href="route('admin.partidos.index')" :active="request()->routeIs('admin.partidos.index')">
+                {{ __('Administración de partidos') }}
+            </x-nav-link>
+            <x-nav-link :href="route('admin.quinielas.index')" :active="request()->routeIs('admin.quinielas.index')">
+                {{ __('Administración de quinielas') }}
+            </x-nav-link>
 
         </div>
 

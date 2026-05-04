@@ -16,5 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AccionSeeder::class);
         $this->call(RolesPermisosSeeder::class);
         $this->call(RolesEventosSeeder::class);
+        $this->call(PartidosSemanaSeed::class);
+        $this->call(QuinielasSeeder::class);
     }
 }

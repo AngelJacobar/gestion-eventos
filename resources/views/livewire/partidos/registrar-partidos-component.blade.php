@@ -13,16 +13,6 @@
 
             <div class="flex flex-col">
                 <x-input-label>
-                    Jornada <span class="text-red-500">*</span>
-                </x-input-label>
-                <x-text-input type="text" wire:model='form.jornada' wire:blur='liveValidation("form.jornada")' class="border p-2" />
-                @error('form.jornada')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="flex flex-col">
-                <x-input-label>
                     Numero de partido <span class="text-red-500">*</span>
                 </x-input-label>
                 <select wire:model='form.numero_partido' wire:blur='liveValidation("form.numero_partido")' class='border p-2'>
@@ -56,16 +46,6 @@
                 @enderror
             </div>
 
-            <div class="flex flex-col">
-                <x-input-label>
-                    Fecha del partido <span class="text-red-500">*</span>
-                </x-input-label>
-                <x-text-input type="date" wire:model='form.fecha_partido' wire:blur='liveValidation("form.fecha_partido")' class="border p-2" />
-                @error('form.fecha_partido')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-
             @if($this->form->esEdicion)
             <div class="flex flex-col">
                 <x-input-label>
@@ -82,26 +62,6 @@
                 @enderror
             </div>
             @endif
-
-            <div class="flex flex-col">
-                <x-input-label>
-                   Fecha Inicio de Jornada <span class="text-red-500">*</span>
-                </x-input-label>
-                <x-text-input type="date" wire:model='form.fecha_inicio_jornada' wire:blur='liveValidation("form.fecha_inicio_jornada")' class="border p-2" />
-                @error('form.fecha_inicio_jornada')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="flex flex-col">
-                <x-input-label>
-                    Fecha Fin de Jornada <span class="text-red-500">*</span>
-                </x-input-label>
-                <x-text-input type="date" wire:model='form.fecha_fin_jornada' wire:blur='liveValidation("form.fecha_fin_jornada")' class="border p-2" />
-                @error('form.fecha_fin_jornada')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
-                @enderror
-            </div>
-            
 
 
         </div>

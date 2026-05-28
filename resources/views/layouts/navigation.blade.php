@@ -56,6 +56,12 @@
                     <x-nav-link :href="route('admin.quinielas.index')" :active="request()->routeIs('admin.quinielas.index')">
                         {{ __('Administración de quinielas') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.partidos72.index')" :active="request()->routeIs('admin.partidos72.index')">
+                        {{ __('Administración de partidos mundialistas') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.quinielas72.index')" :active="request()->routeIs('admin.quinielas72.index')">
+                        {{ __('Administración de quinielas mundialistas') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -161,6 +167,12 @@
             </x-nav-link>
             <x-nav-link :href="route('admin.quinielas.index')" :active="request()->routeIs('admin.quinielas.index')">
                 {{ __('Administración de quinielas') }}
+            </x-nav-link>
+            <x-nav-link :href="route('admin.partidos72.index')" :active="request()->routeIs('admin.partidos72.index')">
+                {{ __('Administración de partidos mundialistas') }}
+            </x-nav-link>
+            <x-nav-link :href="route('admin.quinielas72.index')" :active="request()->routeIs('admin.quinielas72.index')">
+                {{ __('Administración de quinielas mundialistas') }}
             </x-nav-link>
 
         </div>

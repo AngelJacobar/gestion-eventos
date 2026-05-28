@@ -34,18 +34,31 @@ class CalificarQuinielasComponent extends Component
     {
         try {
             // Verificar que todos los partidos tengan resultado
-            $partidosSinResultado = PartidosSemana::where('estatus', 'S')
-                ->whereNull('resultado')
+            $partidosSinResultado = PartidosSemana::whereNull('resultado')
                 ->count();
 
-            
-
+            // Ejecutar la acción de calificación
             CalificarQuinielasAction::execute();
+            
             $this->modalAbierto = false;
+            
+            // Esperar un momento antes de actualizar para asegurar que la DB está actualizada
             $this->dispatch('actualizar-lista-quinielas');
-            $this->success('Las quinielas han sido calificadas exitosamente.');
+            
+            // Contar cuántas quinielas fueron calificadas
+            $quinielasCalificadas = \Modulos\Quinielas\Models\Quinielas::where('puntaje_total', '>', 0)
+                ->count();
+            
+            $totalQuinielas = \Modulos\Quinielas\Models\Quinielas::count();
+            
+            $this->success("Las quinielas han sido calificadas exitosamente. ({$quinielasCalificadas}/{$totalQuinielas} con puntos)");
+            
         } catch (\Exception $e) {
-            $this->error('Error al calificar las quinielas.');
+            $this->error('Error al calificar las quinielas: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('Error al calificar quinielas', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
         }
     }
 }

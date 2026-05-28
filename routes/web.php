@@ -4,7 +4,9 @@ use App\Http\Controllers\ProfileController;
 use App\Livewire\AsistenciaEvento\ListarAsistenciaEventoComponent;
 use App\Livewire\Eventos\ListarEventosComponent;
 use App\Livewire\Partidos\ListarPartidosComponent;
+use App\Livewire\Partidos72\ListarPartidos72Component;
 use App\Livewire\Quinielas\ListarQuinielasComponent;
+use App\Livewire\Quinielas72\ListarQuinielas72Component;
 use App\Livewire\Roles\ListarRolesComponent;
 use App\Livewire\Sesiones\ListarSesionesComponent;
 use App\Livewire\Usuarios\ListarUsuariosComponent;
@@ -25,6 +27,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/partidos', ListarPartidosComponent::class)->name('admin.partidos.index');
     Route::get('/quinielas', ListarQuinielasComponent::class)->name('admin.quinielas.index');
+    Route::get('/partidos72', ListarPartidos72Component::class)->name('admin.partidos72.index');
+    Route::get('/quinielas72', ListarQuinielas72Component::class)->name('admin.quinielas72.index');
     Route::get('/eventos', ListarEventosComponent::class)->name('admin.eventos.index');
     Route::get('/sesiones', ListarSesionesComponent::class)->name('admin.sesiones.index');
     Route::get('/asistencias-evento', ListarAsistenciaEventoComponent::class)->name('admin.asistencias-evento.index');

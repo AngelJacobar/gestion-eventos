@@ -100,7 +100,9 @@
                                 <td class="text-centrado text-base">{{ $quiniela->pronostico_7 }}</td>
                                 <td class="text-centrado text-base">{{ $quiniela->pronostico_8 }}</td>
                                 <td class="text-centrado text-base">{{ $quiniela->pronostico_9 }}</td>
-                                <td class="text-centrado text-base">{{ $quiniela->puntaje_total }}</td>
+                                <td class="text-centrado text-base {{ $quiniela->puntaje_total == $this->puntajeMaximo && $this->puntajeMaximo > 0 ? 'bg-blue-600 text-white font-bold' : '' }}">
+                                    {{ $quiniela->puntaje_total }}
+                                </td>
 
                                 
                                 <td class="text-centrado text-base">

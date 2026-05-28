@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesEventosSeeder::class);
         $this->call(PartidosSemanaSeed::class);
         $this->call(QuinielasSeeder::class);
+        $this->call(Partidos72Seeder::class);
     }
 }

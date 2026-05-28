@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Livewire\Forms\Partidos;
+namespace App\Livewire\Forms\Partidos72;
 
 use App\Traits\ArreglosMultidimensionalesHelper;
 use Livewire\Form;
-use Modulos\Quinielas\Models\PartidosSemana;
+use Modulos\Quinielas\Models\Partidos72;
 
-class RegistrarPartidosForm extends Form
+class RegistrarPartidos72Form extends Form
 {
     use ArreglosMultidimensionalesHelper;
 
-    public $id_partido;
+    public $id_partido_72;
     public $numero_partido;
     public $equipo_local;
     public $equipo_visitante;
     public $resultado;
     public $esEdicion = false;
 
-   public function validationAttributes()
+    public function validationAttributes()
     {
         return [
             'numero_partido' => 'Número de partido',
@@ -27,13 +27,12 @@ class RegistrarPartidosForm extends Form
         ];
     }
 
-    
     public function rules(): array
     {
         return [
-            'numero_partido' => ['required', 'integer', 'min:1'],
-            'equipo_local' => ['required', 'string', 'max:255'],
-            'equipo_visitante' => ['required', 'string', 'max:255'],
+            'numero_partido' => ['required', 'integer', 'min:1', 'max:72'],
+            'equipo_local' => ['required', 'string', 'max:100'],
+            'equipo_visitante' => ['required', 'string', 'max:100'],
             'resultado' => ['nullable', 'string', 'in:L,V,E'],
         ];
     }
@@ -41,36 +40,37 @@ class RegistrarPartidosForm extends Form
     public function messages()
     {
         return [
-            "resultado.in" => "El resultado debe ser L (Local), V (Visitante) o E (Empate).", 
+            "resultado.in" => "El resultado debe ser L (Local), V (Visitante) o E (Empate).",
+            "numero_partido.max" => "El número de partido no puede ser mayor a 72.",
         ];
     }
 
-    public function setDatos(?int $idPartido = null)
+    public function setDatos(?int $idPartido72 = null)
     {
-        $this->id_partido = $idPartido;
+        $this->id_partido_72 = $idPartido72;
 
-        $partido = $idPartido
-        ? PartidosSemana::findOrFail($idPartido)
-        : new PartidosSemana();
+        $partido = $idPartido72
+            ? Partidos72::findOrFail($idPartido72)
+            : new Partidos72();
         $this->esEdicion = false;
 
-        if ($idPartido) {
-        $this->esEdicion = true;
-        $this->id_partido = $partido->id_partido;
-        $this->numero_partido = $partido->numero_partido;
-        $this->equipo_local = $partido->equipo_local;
-        $this->equipo_visitante = $partido->equipo_visitante;
-        $this->resultado = $partido->resultado;
+        if ($idPartido72) {
+            $this->esEdicion = true;
+            $this->id_partido_72 = $partido->id_partido_72;
+            $this->numero_partido = $partido->numero_partido;
+            $this->equipo_local = $partido->equipo_local;
+            $this->equipo_visitante = $partido->equipo_visitante;
+            $this->resultado = $partido->resultado;
         }
     }
 
     public function isDirty(): bool
     {
-        if (!$this->id_partido) {
+        if (!$this->id_partido_72) {
             return true;
         }
 
-        $db = PartidosSemana::find($this->id_partido);
+        $db = Partidos72::find($this->id_partido_72);
 
         if (!$db) {
             return true;
@@ -92,8 +92,4 @@ class RegistrarPartidosForm extends Form
 
         return !self::sonIguales($actual, $original);
     }
-
-      
-
-    
 }

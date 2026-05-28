@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire\Quinielas;
+namespace App\Livewire\Quinielas72;
 
-use App\Livewire\Forms\Quinielas\RegistrarQuinielasForm;
+use App\Livewire\Forms\Quinielas72\RegistrarQuinielas72Form;
 use App\Traits\WithLiveValidation;
 use App\Traits\WithTrimArreglosRecursivos;
 use Illuminate\Support\Facades\Auth;
@@ -11,42 +11,45 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Masmerise\Toaster\Toastable;
-use Modulos\Quinielas\Models\PartidosSemana;
-use Modulos\Quinielas\Quinielas\Actions\RegistrarQuinielasAction;
+use Modulos\Quinielas\Models\Partidos72;
+use Modulos\Quinielas\Quinielas72\Actions\RegistrarQuinielas72Action;
 
-class RegistrarQuinielasComponent extends Component
+class RegistrarQuinielas72Component extends Component
 {
     use Toastable;
     use WithTrimArreglosRecursivos;
     use WithLiveValidation;
 
-    public $idQuiniela;
+    public $idQuiniela72;
     public $modalAbierto = false;
-    public RegistrarQuinielasForm $form;
+    public RegistrarQuinielas72Form $form;
     protected $formName = 'form';
 
     public function render()
     {
-        return view('livewire.quinielas.registrar-quinielas-component');
+        return view('livewire.quinielas72.registrar-quinielas72-component');
     }
 
-    #[On('abrir-modal-registrar-quiniela')]
-    public function abrirModalRegistrarQuiniela($idQuiniela)
+    #[On('abrir-modal-registrar-quiniela72')]
+    public function abrirModalRegistrarQuiniela72($idQuiniela72)
     {
-
-        $this->idQuiniela = $idQuiniela;
+        $this->idQuiniela72 = $idQuiniela72;
         $this->form->reset();
-        if ($idQuiniela) {
-            $this->form->setDatos($idQuiniela);
+        
+        if ($idQuiniela72) {
+            $this->form->setDatos($idQuiniela72);
             $this->form->esEdicion = true;
         } else {
             $this->form->esEdicion = false;
+            // Inicializar array de pronósticos vacío para los 72 partidos
+            $partidos = Partidos72::orderBy('numero_partido', 'asc')->get();
+            foreach ($partidos as $partido) {
+                $this->form->pronosticos[$partido->id_partido_72] = null;
+            }
         }
-
 
         $this->modalAbierto = true;
     }
-
 
     public function guardar()
     {
@@ -54,9 +57,7 @@ class RegistrarQuinielasComponent extends Component
         
         // Asignar valores automáticos si no existen
         if (!$this->form->esEdicion) {
-            // Obtener la jornada de los partidos activos
-            $partidoActivo = PartidosSemana::first();
-            $this->form->jornada = $partidoActivo ? $partidoActivo->jornada : 'Jornada 1';
+            $this->form->jornada = $this->form->jornada ?? 'Jornada 1';
             $this->form->fecha_registro = now()->format('Y-m-d');
             $this->form->puntaje_total = 0;
         }
@@ -69,9 +70,9 @@ class RegistrarQuinielasComponent extends Component
         }
 
         try {
-            RegistrarQuinielasAction::execute($this->form, Auth::id(), $this->idQuiniela);
+            RegistrarQuinielas72Action::execute($this->form, Auth::id(), $this->idQuiniela72);
             $this->modalAbierto = false;
-            $this->dispatch('actualizar-lista-quinielas');
+            $this->dispatch('actualizar-lista-quinielas72');
             $mensaje = $this->form->esEdicion ? 'Quinielas.edicion.exito' : 'Quinielas.registro.exito';
             $this->success($mensaje);
             $this->form->esEdicion = false;
@@ -85,7 +86,7 @@ class RegistrarQuinielasComponent extends Component
     protected function restablecer()
     {
         $this->form->reset();
-        $this->idQuiniela = null;
+        $this->idQuiniela72 = null;
         $this->resetValidation();
     }
 
@@ -102,9 +103,9 @@ class RegistrarQuinielasComponent extends Component
         $this->modalAbierto = false;
     }
 
-     #[Computed]
-     public function partidos()
+    #[Computed]
+    public function partidos()
     {
-        return PartidosSemana::get();
+        return Partidos72::orderBy('numero_partido', 'asc')->get();
     }
 }

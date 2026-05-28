@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire\Partidos;
+namespace App\Livewire\Partidos72;
 
-use App\Livewire\Forms\Partidos\BuscarPartidosForm;
+use App\Livewire\Forms\Partidos72\BuscarPartidos72Form;
 use App\Traits\WithColumnFiltering;
 use App\Traits\WithColumnSorting;
 use App\Traits\WithTrimArreglosRecursivos;
@@ -11,10 +11,10 @@ use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toastable;
-use Modulos\Quinielas\Partidos\Actions\ListarPartidosAction;
+use Modulos\Quinielas\Partidos72\Actions\ListarPartidos72Action;
 use Livewire\Attributes\On;
 
-class ListarPartidosComponent extends Component
+class ListarPartidos72Component extends Component
 {
     use Toastable;
     use WithPagination;
@@ -22,15 +22,14 @@ class ListarPartidosComponent extends Component
     use WithColumnFiltering;
     use WithTrimArreglosRecursivos;
 
-    public BuscarPartidosForm $buscarPartido;
-    public BuscarPartidosForm $filtrosAplicados;
+    public BuscarPartidos72Form $buscarPartido;
+    public BuscarPartidos72Form $filtrosAplicados;
 
     protected $pageName = 'pagina';
 
-    
     public function render()
     {
-        return view('livewire.partidos.listar-partidos-component');
+        return view('livewire.partidos72.listar-partidos72-component');
     }
 
     public function mount()
@@ -38,11 +37,10 @@ class ListarPartidosComponent extends Component
         $this->restablecer();
     }
 
-    #[On('actualizar-lista-partidos')]
+    #[On('actualizar-lista-partidos72')]
     public function actualizar()
     {
     }
-
 
     public function filtrar()
     {
@@ -62,9 +60,9 @@ class ListarPartidosComponent extends Component
 
     public function restablecer()
     {
-        $this->sort = 'id_partido';
+        $this->sort = 'numero_partido';
         $this->direction = 'asc';
-        $this->cantidad = 10;
+        $this->cantidad = 20;
         $this->buscarPartido->reset();
         $this->filtrosAplicados->reset();
         $this->actualizarMensajeFiltrado();
@@ -75,17 +73,17 @@ class ListarPartidosComponent extends Component
     {
         $resultados = new Collection();
         try {
-            $resultados = ListarPartidosAction::execute($this->filtrosAplicados)
+            $resultados = ListarPartidos72Action::execute($this->filtrosAplicados)
                 ->orderBy($this->sort, $this->direction)
-                ->orderBy('id_partido', 'asc')
-                ->paginate(perPage : $this->cantidad, pageName : $this->pageName);
+                ->orderBy('numero_partido', 'asc')
+                ->paginate(perPage: $this->cantidad, pageName: $this->pageName);
         } catch (\Exception $e) {
             $this->error('messages.error_filtros');
             $this->filtrosAplicados->reset();
             $this->restablecer();
-            $resultados = ListarPartidosAction::execute($this->filtrosAplicados)
+            $resultados = ListarPartidos72Action::execute($this->filtrosAplicados)
                 ->orderBy($this->sort, $this->direction)
-                ->orderBy('id_partido', 'asc')
+                ->orderBy('numero_partido', 'asc')
                 ->paginate(perPage: $this->cantidad, pageName: $this->pageName);
         } finally {
             return $resultados;

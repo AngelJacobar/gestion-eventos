@@ -12,10 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('partidos_semana', function (Blueprint $table) {
-            $table->comment('Catálogo de partidos programados.');
-            $table->id('id_partido')->comment('Identificador único del partido.');
-            $table->integer('numero_partido')->nullable()->comment('Número del partido, por ejemplo: 1, 2, 3, etc.');
+        Schema::create('partidos_72', function (Blueprint $table) {
+            $table->comment('Catálogo de 72 partidos programados para quinielas grandes.');
+            $table->id('id_partido_72')->comment('Identificador único del partido.');
+            $table->integer('numero_partido')->nullable()->comment('Número del partido, del 1 al 72.');
             $table->string('equipo_local', 100)->comment('Nombre del equipo local.');
             $table->string('equipo_visitante', 100)->comment('Nombre del equipo visitante.');
             $table->char('resultado', 1)->nullable()->comment('Resultado del partido: L = Local, V = Visitante, E = Empate.');
@@ -24,7 +24,7 @@ return new class extends Migration
         });
         
         // Agregar check constraint usando SQL raw para PostgreSQL
-        DB::statement("ALTER TABLE partidos_semana ADD CONSTRAINT check_resultado CHECK (resultado IS NULL OR UPPER(resultado) IN ('L', 'V', 'E'));");
+        DB::statement("ALTER TABLE partidos_72 ADD CONSTRAINT check_resultado_72 CHECK (resultado IS NULL OR UPPER(resultado) IN ('L', 'V', 'E'));");
     }
 
     /**
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('partidos_semana');
+        Schema::dropIfExists('partidos_72');
     }
 };

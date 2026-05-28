@@ -48,8 +48,14 @@ class ListarQuinielasComponent extends Component
      #[On('actualizar-lista-quinielas')]
     public function actualizar()
     {
+        // Forzar la recarga de las propiedades computed
         unset($this->quinielas);
         unset($this->partidos);
+        unset($this->puntajeMaximo);
+        unset($this->quinielasGanadoras);
+        
+        // Forzar re-render del componente
+        $this->dispatch('$refresh');
     }
 
     /**
@@ -218,7 +224,6 @@ class ListarQuinielasComponent extends Component
                             'nombre' => $nombreConSufijo,
                             'telefono' => $telefono,
                             'puntaje_total' => 0,
-                            'estatus' => 'S',
                             'fecha_registro' => now(),
                         ];
 
@@ -309,8 +314,7 @@ class ListarQuinielasComponent extends Component
     {
         try {
             // Obtener todas las quinielas activas
-            $quinielas = Quinielas::where('estatus', 'S')
-                ->orderBy('nombre', 'asc')
+            $quinielas = Quinielas::orderBy('nombre', 'asc')
                 ->get();
 
             // Verificar que haya quinielas para exportar
@@ -320,15 +324,18 @@ class ListarQuinielasComponent extends Component
             }
 
             // Obtener partidos
-            $partidos = PartidosSemana::where('estatus', 'S')
-                ->orderBy('numero_partido', 'asc')
+            $partidos = PartidosSemana::orderBy('numero_partido', 'asc')
                 ->get();
+
+            // Obtener puntaje máximo para resaltar ganadoras
+            $puntajeMaximo = $quinielas->max('puntaje_total');
 
             // Generar el PDF
             $pdf = Pdf::loadView('livewire.quinielas.quinielas-pdf', [
                 'quinielas' => $quinielas,
                 'partidos' => $partidos,
-                'fechaExportacion' => now()->format('d/m/Y H:i:s')
+                'fechaExportacion' => now()->format('d/m/Y H:i:s'),
+                'puntajeMaximo' => $puntajeMaximo
             ]);
 
             // Configurar orientación horizontal para mejor visualización
@@ -361,8 +368,7 @@ class ListarQuinielasComponent extends Component
     {
         try {
             // Obtener todas las quinielas activas
-            $quinielas = Quinielas::where('estatus', 'S')
-                ->orderBy('nombre', 'asc')
+            $quinielas = Quinielas::orderBy('nombre', 'asc')
                 ->get();
 
             // Verificar que haya quinielas para exportar
@@ -372,15 +378,18 @@ class ListarQuinielasComponent extends Component
             }
 
             // Obtener partidos
-            $partidos = PartidosSemana::where('estatus', 'S')
-                ->orderBy('numero_partido', 'asc')
+            $partidos = PartidosSemana::orderBy('numero_partido', 'asc')
                 ->get();
+
+            // Obtener puntaje máximo para resaltar ganadoras
+            $puntajeMaximo = $quinielas->max('puntaje_total');
 
             // Generar el PDF con resultados
             $pdf = Pdf::loadView('livewire.quinielas.quinielas-resultados-pdf', [
                 'quinielas' => $quinielas,
                 'partidos' => $partidos,
-                'fechaExportacion' => now()->format('d/m/Y H:i:s')
+                'fechaExportacion' => now()->format('d/m/Y H:i:s'),
+                'puntajeMaximo' => $puntajeMaximo
             ]);
 
             // Configurar orientación horizontal para mejor visualización
@@ -410,17 +419,25 @@ class ListarQuinielasComponent extends Component
     #[Computed]
      public function quinielas()
     {
-        return Quinielas::where('estatus', 'S')
-            ->orderBy('id_quiniela', 'asc')
+        return Quinielas::orderBy('id_quiniela', 'asc')
             ->get();
     }
 
     #[Computed]
      public function partidos()
     {
-        return PartidosSemana::where('estatus', 'S')
-            ->orderBy('numero_partido', 'asc')
+        return PartidosSemana::orderBy('numero_partido', 'asc')
             ->get();
+    }
+
+    /**
+     * Obtener el puntaje máximo de todas las quinielas activas
+     */
+    #[Computed]
+    public function puntajeMaximo()
+    {
+        $puntaje = Quinielas::max('puntaje_total');
+        return $puntaje ?? 0;
     }
 
     /**
@@ -430,7 +447,7 @@ class ListarQuinielasComponent extends Component
     public function quinielasGanadoras()
     {
         // Obtener el puntaje máximo
-        $puntajeMaximo = Quinielas::where('estatus', 'S')->max('puntaje_total');
+        $puntajeMaximo = Quinielas::max('puntaje_total');
         
         // Si no hay quinielas o todas tienen 0 puntos
         if ($puntajeMaximo === null || $puntajeMaximo === 0) {
@@ -438,8 +455,7 @@ class ListarQuinielasComponent extends Component
         }
         
         // Obtener todas las quinielas con el puntaje máximo
-        return Quinielas::where('estatus', 'S')
-            ->where('puntaje_total', $puntajeMaximo)
+        return Quinielas::where('puntaje_total', $puntajeMaximo)
             ->orderBy('nombre', 'asc')
             ->get();
     }

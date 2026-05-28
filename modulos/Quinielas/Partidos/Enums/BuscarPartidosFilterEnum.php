@@ -3,16 +3,15 @@
 namespace Modulos\Quinielas\Partidos\Enums;
 
 use Modulos\Common\Filters\Filter;
-use Modulos\Quinielas\Partidos\Filters\EstatusFilter;
 
 enum BuscarPartidosFilterEnum :string
 {
-    case Estatus = 'estatus';
+    // No hay filtros disponibles actualmente
    
     public function createFilter(mixed $value): Filter
     {
         return match ($this) {
-            self::Estatus => new EstatusFilter($value),
+            // Sin casos definidos
         };
     }
 }

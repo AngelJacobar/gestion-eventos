@@ -108,6 +108,11 @@
             color: white;
         }
         
+        .puntaje-ganadora {
+            background-color: #2563eb !important;
+            color: white !important;
+        }
+        
         .footer {
             margin-top: 15px;
             padding-top: 10px;
@@ -145,16 +150,80 @@
     <div class="header">
         <div class="header-content">
             <img src="{{ public_path('img/logo.png') }}" alt="Logo" class="logo">
+            <div class="header-text">
+                <h1>Registro de Quinielas</h1>
+            </div>
         </div>
     </div>
     
-    <div class="info">
-        <div>
-            <strong>Total de Quinielas:</strong> {{ $quinielas->count() }}
+     <div style="margin-bottom: 10px; overflow: hidden;">
+        <!-- Columna izquierda: Información -->
+        <div style="float: left; width: 28%; margin-right: 2%; font-size: 8px;">
+            <div style="margin-bottom: 6px;">
+                <strong>Total de Quinielas:</strong> {{ $quinielas->count() }}
+            </div>
+            <div style="margin-bottom: 6px;">
+                <strong>Fecha de Exportación:</strong> {{ $fechaExportacion }}
+            </div>
+            <div style="margin-bottom: 6px;">
+                <strong>Monto del Premio:</strong> ${{ number_format($quinielas->count() * 20 - $quinielas->count() * 20 * 0.20, 2) }}
+            </div>
+            <div style="margin-bottom: 6px;">
+                <strong>Monto del Premio de Quiniela Perfecta:</strong> ${{ number_format($quinielas->count() * 20 * 0.05 + 54, 2) }}
+            </div>
         </div>
-        <div>
-            <strong>Fecha de Exportación:</strong> {{ $fechaExportacion }}
+        
+        <!-- Columna derecha: Calendario de Partidos -->
+        <div style="float: right; width: 30%;">
+            <h3 style="font-size: 10px; margin-bottom: 5px; text-align: center; color: #2c3e50;">Calendario de Partidos</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="background-color: #34495e; color: white; padding: 2px 3px; text-align: left; font-size: 8px; width: 50%;">Partido</th>
+                        <th style="background-color: #34495e; color: white; padding: 2px 3px; text-align: center; font-size: 8px; width: 50%;">Fecha y Hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #f8f9fa;">
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; font-size: 8px;">Barcelona F vs Lyonnes F</td>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; text-align: center; font-size: 8px;">Sáb 23/05 10:00am</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; font-size: 8px;">B. Munich vs Stuttgart</td>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; text-align: center; font-size: 8px;">Sáb 23/05 12:00pm</td>
+                    </tr>
+                    <tr style="background-color: #f8f9fa;">
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; font-size: 8px;">Girona vs Elche</td>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; text-align: center; font-size: 8px;">Sáb 23/05 1:00pm</td>
+                    </tr>   
+                    <tr>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; font-size: 8px;">Vitória BA vs Inter P.A.</td>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; text-align: center; font-size: 8px;">Sáb 23/05 2:00pm</td>
+                    </tr>
+                    <tr style="background-color: #f8f9fa;">
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; font-size: 8px;">Minnesota vs Salt Lake</td>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; text-align: center; font-size: 8px;">Sáb 23/05 2:30pm</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; font-size: 8px;">Charlotte vs New England</td>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; text-align: center; font-size: 8px;">Sáb 23/05 5:30pm</td>
+                    </tr>
+                    <tr style="background-color: #f8f9fa;">
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; font-size: 8px;">Shimizu vs Gamba Osaka</td>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; text-align: center; font-size: 8px;">Dom 24/05 8:00am</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; font-size: 8px;">Spartak vs Krasnodar</td>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; text-align: center; font-size: 8px;">Dom 24/05 10:00am</td>
+                    </tr>
+                    <tr style="background-color: #f8f9fa;">
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; font-size: 8px;">Pumas vs Cruz Azul</td>
+                        <td style="padding: 2px 3px; border: 1px solid #bdc3c7; text-align: center; font-size: 8px;">Dom 24/05 7:00pm</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        <div style="clear: both;"></div>
     </div>
     
     @if($quinielas->count() > 0)
@@ -188,7 +257,9 @@
                             </td>
                         @endfor
                         
-                        <td class="puntaje-col">{{ $quiniela->puntaje_total }}</td>
+                        <td class="puntaje-col {{ $quiniela->puntaje_total == $puntajeMaximo && $puntajeMaximo > 0 ? 'puntaje-ganadora' : '' }}">
+                            {{ $quiniela->puntaje_total }}
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
